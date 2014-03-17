@@ -30,24 +30,24 @@ function product_post_type() {
     );
 
 	$args = array(
-		'label'               => __( 'fik_product', 'text_domain' ),
+		'label'               => __( 'Products', 'text_domain' ),
 		'description'         => __( 'Product post type used in Fik Stores for store products', 'text_domain' ),
 		'labels'              => $labels,
-		'supports'            => array( ),
+		'supports' => array('title', 'editor', 'excerpt', 'custom-fields', 'page-attributes'), // thumbnail, revision or comment support can be added here
 		'taxonomies'          => array( 'store_category', 'post_tag' ),
-		'hierarchical'        => false,
+		'hierarchical'        => true,
 		'public'              => true,
 		'show_ui'             => true,
 		'show_in_menu'        => true,
 		'show_in_nav_menus'   => true,
 		'show_in_admin_bar'   => true,
-		'menu_position'       => 5,
+		'menu_position'       => 8,
 		'menu_icon'           => '',
 		'can_export'          => true,
 		'has_archive'         => true,
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
-		'capability_type'     => 'page',
+		'capability_type'     => 'post',
 	);
 	register_post_type( 'fik_product', $args );
 
