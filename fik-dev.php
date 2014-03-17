@@ -2,7 +2,7 @@
    /*
    Plugin Name: Fik Dev
    Plugin URI: http://fikstores.com
-   Description: a plugin to help with the development of a theme for Fik Stores
+   Description: Fik Stores Themes helper plugin
    Version: 1.0
    Author: Fik Stores
    Author URI: http://fikstores.com
