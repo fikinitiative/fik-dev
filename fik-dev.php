@@ -57,6 +57,60 @@ function product_post_type() {
 add_action( 'init', 'product_post_type', 0 );
 
 
+
+function fik_stores_customizer($wp_customize) {
+
+    class fik_stores_Customize_Badge_Control extends WP_Customize_Control {
+
+        public $type = 'select';
+
+        public function render_content() {
+        	$badge_colors = array('Default','Red', 'Green', 'Blue', 'Purple', 'Gray');
+        	echo ('<label><span class="customize-control-title">' . esc_html($this->label) . '</span><select ' . $this->link() . '>');
+        	foreach ($badge_colors as $color) {
+        		echo ('<option value="' . ($color == $badge_colors[0] ? '': $color) . '"' . selected($this->value(), $color) . '>' .  $color . '</option>');
+        	}
+        	echo ('</select></label>');
+        }
+
+    }
+
+    $wp_customize->add_section('fik_stores_fikstores_badge', array(
+        'title' => __('Fik Stores Badge', 'fik-stores'),
+        'priority' => 130,
+    ));
+
+    $wp_customize->add_setting('fik_stores_badge', array(
+        'default' => '',
+        'transport' => 'refresh',
+    ));
+
+    $wp_customize->add_control(
+    	new fik_stores_Customize_Badge_Control($wp_customize, 'fik_stores_badge', array(
+                'label' => __('Badge', 'fik-stores'),
+                'section' => 'fik_stores_fikstores_badge',
+                'settings' => 'fik_stores_badge',
+            )));
+}
+
+add_action('customize_register', 'fik_stores_customizer');
+
+function get_fikstores_badge(){
+	$badge = get_theme_mod('fik_stores_badge', '');
+    $src = plugins_url( 'img/poweredbyfikstores' . $filename . '.png' , __FILE__ ) ;
+
+    return '<a href="http://fikstores.com/" title="Better ecommerce">
+    	<img width="105" height="50" src="' . $src . '" class="replace-2x fikstores-badge" alt="Better ecommerce">
+    	</a>';
+
+}
+
+function the_fikstores_badge() {
+	echo get_fikstores_badge();
+	return;
+}
+
+
 function the_fik_price(){
 	echo('<span itemprop="price" class="price"><span class="amount">109,99</span> EUR</span>');
 	return;
@@ -64,8 +118,22 @@ function the_fik_price(){
 }
 
 function the_fik_add_to_cart_button(){
-	echo('<form action="" class="fik_add_cart" method="post" enctype="multipart/form-data"><input type="hidden" name="store_product_id" value="38"><div class="control-group product-quantity"><label class="control-label" for="quantity">Quantity</label><div class="controls"><input type="number" name="quantity" class="input-mini" min="1" max="10" step="1" value="1" required=""></div></div><button type="submit" class="button alt btn btn-primary">Add to cart</button></form>');
+	echo('<form action="" class="fik_add_cart" method="post" enctype="multipart/form-data"><input type="hidden" name="store_product_id" value="38">'
+		. get_fik_product_select_variations() . get_fik_product_select_quantity() . get_add_to_cart_button() .
+		'</form>');
 	return;
+}
+
+function get_fik_product_select_variations(){
+	return '';
+}
+
+function get_fik_product_select_quantity(){
+	return '<div class="control-group product-quantity"><label class="control-label" for="quantity">Quantity</label><div class="controls"><input type="number" name="quantity" class="input-mini" min="1" max="10" step="1" value="1" required=""></div></div>';
+}
+
+function get_add_to_cart_button(){
+	return '<button type="submit" class="button alt btn btn-primary">Add to cart</button>';
 }
 
 
@@ -131,6 +199,13 @@ function the_product_gallery_thumbnails($thumnail_size = 'post-thumbnail', $imag
 
     echo $output;
     return;
+}
+
+
+
+function the_store_logo($size = "full", $args = array('class' => 'logo')){
+    $logo_id = get_option('_fik_store_logo');
+    echo wp_get_attachment_image($logo_id, $size, false, $args);
 }
 
 ?>
