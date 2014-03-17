@@ -12,24 +12,26 @@
 // Register Product Post Type
 function product_post_type() {
 
-	$labels = array(
-		'name'                => _x( 'Products', 'Post Type General Name', 'text_domain' ),
-		'singular_name'       => _x( 'Product', 'Post Type Singular Name', 'text_domain' ),
-		'menu_name'           => __( 'Post Type', 'text_domain' ),
-		'parent_item_colon'   => __( 'Parent Item:', 'text_domain' ),
-		'all_items'           => __( 'All Items', 'text_domain' ),
-		'view_item'           => __( 'View Item', 'text_domain' ),
-		'add_new_item'        => __( 'Add New Item', 'text_domain' ),
-		'add_new'             => __( 'Add New', 'text_domain' ),
-		'edit_item'           => __( 'Edit Item', 'text_domain' ),
-		'update_item'         => __( 'Update Item', 'text_domain' ),
-		'search_items'        => __( 'Search Item', 'text_domain' ),
-		'not_found'           => __( 'Not found', 'text_domain' ),
-		'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
-	);
+    $labels = array(
+        'name' => _x('Products', 'Product post type general name (plural)' , 'text_domain' ),
+        'singular_name' => _x('Product', 'post type singular name' , 'text_domain' ),
+        'add_new' => _x('Add New', 'Product' , 'text_domain' ),
+        'add_new_item' => __('Add New Product' , 'text_domain'),
+        'edit_item' => __('Edit Product' , 'text_domain'),
+        'new_item' => __('New Product' , 'text_domain'),
+        'all_items' => __('All Products' , 'text_domain'),
+        'view_item' => __('View Product' , 'text_domain'),
+        'search_items' => __('Search Products' , 'text_domain'),
+        'not_found' => __('No products found' , 'text_domain'),
+        'not_found_in_trash' => __('No products found in Trash' , 'text_domain'),
+        'parent_item_colon' => __( 'Parent Product:', 'text_domain' ),
+        'menu_name' => __('Products' , 'text_domain'),
+        'update_item'         => __( 'Update Product', 'text_domain' ),
+    );
+
 	$args = array(
 		'label'               => __( 'fik_product', 'text_domain' ),
-		'description'         => __( 'Fik Stores - Product', 'text_domain' ),
+		'description'         => __( 'Product post type used in Fik Stores for store products', 'text_domain' ),
 		'labels'              => $labels,
 		'supports'            => array( ),
 		'taxonomies'          => array( 'store_category', 'post_tag' ),
@@ -54,6 +56,11 @@ function product_post_type() {
 // Hook into the 'init' action
 add_action( 'init', 'product_post_type', 0 );
 
+
+function the_fik_price(){
+	return '<span itemprop="price" class="price"><span class="amount">109,99</span> EUR</span>';
+
+}
 
 
 ?>
