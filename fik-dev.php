@@ -62,5 +62,9 @@ function the_fik_price(){
 
 }
 
+function the_fik_add_to_cart_button(){
+	return '<form action="" class="fik_add_cart" method="post" enctype="multipart/form-data"><input type="hidden" name="store_product_id" value="38"><div class="control-group product-quantity"><label class="control-label" for="quantity">Quantity</label><div class="controls"><input type="number" name="quantity" class="input-mini" min="1" max="10" step="1" value="1" required=""></div></div><button type="submit" class="button alt btn btn-primary">Add to cart</button></form>';
+}
+
 
 ?>
