@@ -33,7 +33,7 @@ function product_post_type() {
 		'label'               => __( 'Products', 'text_domain' ),
 		'description'         => __( 'Product post type used in Fik Stores for store products', 'text_domain' ),
 		'labels'              => $labels,
-		'supports' => array('title', 'editor', 'excerpt', 'custom-fields', 'page-attributes'), // thumbnail, revision or comment support can be added here
+		'supports' => array('title', 'editor', 'excerpt', 'custom-fields', 'page-attributes', 'thumbnail'), // thumbnail, revision or comment support can be added here
 		'taxonomies'          => array( 'store_category', 'post_tag' ),
 		'hierarchical'        => true,
 		'public'              => true,
