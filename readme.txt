@@ -1,8 +1,8 @@
-=== Fik Store Dev Plugin ===
+=== Fik Store Theme Dev Plugin ===
 Tags: fik stores, dummy
 Requires at least: 3.8
 
-Fik Stores themers dev help
+Fik Stores theme development help plugin
 
 == Installation ==
 Install this

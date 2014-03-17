@@ -1,8 +1,8 @@
 <?php
    /*
-   Plugin Name: Fik Dev
+   Plugin Name: Fik Stores Dev
    Plugin URI: http://fikstores.com
-   Description: Fik Stores Themes helper plugin
+   Description: Fik Stores Themes development helper plugin
    Version: 1.0
    Author: Fik Stores
    Author URI: http://fikstores.com
