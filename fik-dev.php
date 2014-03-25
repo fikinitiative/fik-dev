@@ -137,64 +137,25 @@ function get_add_to_cart_button(){
 
 
 function the_product_gallery_thumbnails($thumnail_size = 'post-thumbnail', $image_size = 'medium', $zoom_image_size = 'large'){
-    global $post;
-    $post = get_post($post);
-
-    /* image code */
-    $thumblist = array();
-    //$images = & get_children('post_type=attachment&post_mime_type=image&output=ARRAY_N&orderby=menu_order&order=ASC&post_parent=' . $post->ID);
-    $args = array(
-        'numberposts' => -1,
-        'order' => 'ASC',
-        'orderby' => 'menu_order',
-        'post_mime_type' => 'image',
-        'post_parent' => $post->ID,
-        'post_type' => 'attachment',
-        'meta_query' => array(
-            array(
-                'key' => '_fik_product_image',
-                'value' => $post->ID,
-            )
-        ) // The attachment was downloaded via the Product Images metabox, so it should be shown in the image gallery
-    );
-
-    $images = & get_children($args);
-
-    if ($images) {
-        foreach ($images as $imageID => $imagePost) {
-            unset($the_thumbnail);
-            unset($the_image_url);
-            $the_thumbnail = wp_get_attachment_image($imageID, $thumnail_size, false);
-            $the_image = get_post($imageID);
-            $the_image_url = wp_get_attachment_image_src($imageID, $image_size, false);
-            $the_zoom_image_url = wp_get_attachment_image_src($imageID, $zoom_image_size, false);
-            $thumblist[$imageID] = '<a target="_blank" href="' . $the_image_url[0] . '" title="' . $the_image->post_title . '" data-width="' . $the_image_url[1] . '" data-height="' . $the_image_url[2] . '" data-zoom-image="' . $the_zoom_image_url[0] . '" data-zoomimagewidth="' . $the_zoom_image_url[1] . '" data-zoomimageheight="' . $the_zoom_image_url[2] . '">' . $the_thumbnail . '</a>';
-        }
+    $product_image = get_post_custom_values('product_image');
+    foreach ( $product_image as $key => $image_id ) {
+        $the_thumbnail = wp_get_attachment_image($image_id, $thumnail_size, false);
+        $the_image = get_post($image_id);
+        $the_image_url = wp_get_attachment_image_src($image_id, $image_size, false);
+        $the_zoom_image_url = wp_get_attachment_image_src($image_id, $zoom_image_size, false);
+        $thumblist[$image_id] = '<a target="_blank" href="' . $the_image_url[0] . '" title="' . $the_image->post_title . '" data-width="' . $the_image_url[1] . '" data-height="' . $the_image_url[2] . '" data-zoom-image="' . $the_zoom_image_url[0] . '" data-zoomimagewidth="' . $the_zoom_image_url[1] . '" data-zoomimageheight="' . $the_zoom_image_url[2] . '">' . $the_thumbnail . '</a>';
     }
 
     if ($thumblist == array())
         return false;
 
-    if ($hide_if_one) {
-        $thumbnail_count = 0;
-    }
-
     $output = '<ul class="product-image-thumbnails thumbnails">';
 
     foreach ($thumblist as $thumbnail) {
         $output .= '<li class="thumbnail">' . $thumbnail . '</li>';
-        if ($hide_if_one) {
-            $thumbnail_count++;
-        }
     }
 
     $output .= '</ul>';
-
-    if ($hide_if_one) {
-        if ($thumbnail_count <= 1) {
-            return;
-        }
-    }
 
     echo $output;
     return;
@@ -219,7 +180,7 @@ function the_store_logo($size = "full", $args = array('class' => 'logo')){
  *     of that type.
  */
 
-function fik_messages($display = FALSE, $message = array ('status' => 'This is a test message')) {
+function fik_messages($display = FALSE, $message = array ('error' => "This is a test message")) {
   $output = '';
   $status_heading = array(
     'success' => __('Status message', 'fik-stores'), 
@@ -241,7 +202,11 @@ function fik_messages($display = FALSE, $message = array ('status' => 'This is a
       $output .= " </ul>\n";
     }
     else {
-      $output .= '<p>' . $messages[0] . '</p>';
+        if(is_array($messages)){
+            $output .= '<p>' . $messages[0] . '</p>';
+        }else{
+            $output .= '<p><ul><li>' . $messages . '</li></ul></p>';
+        }
     }
     $output .= "</div>\n";
   }

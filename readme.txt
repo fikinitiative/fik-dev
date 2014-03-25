@@ -8,7 +8,7 @@ Fik Stores theme development help plugin
 Install this
 
 == Frequently Asked Questions ==
-FAQs
+In order to create a thumbnail gallery for products, you must add a Custom Field to the product, where the key will be "product_image" and the value will be the ID of the image uploaded to the WordPress media library. Add as meny "product_image" custom fields as images needed.
 
 == Screenshots ==
 1. Desc
