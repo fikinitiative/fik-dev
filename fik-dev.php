@@ -219,7 +219,7 @@ function the_store_logo($size = "full", $args = array('class' => 'logo')){
  *     of that type.
  */
 
-function fik_messages($display = FALSE, $messages = array ('status' => 'This is a test message')) {
+function fik_messages($display = FALSE, $message = array ('status' => 'This is a test message')) {
   $output = '';
   $status_heading = array(
     'success' => __('Status message', 'fik-stores'), 
@@ -227,7 +227,7 @@ function fik_messages($display = FALSE, $messages = array ('status' => 'This is 
     'warning' => __('Warning message', 'fik-stores'),
     'info' => __('Info message', 'fik-stores'), 
   );
-  foreach ($messages as $type => $messages) {
+  foreach ($message as $type => $messages) {
     if ($type) $alert_class = "alert-" . $type;
     $output .= "<div class=\"alert $alert_class\">\n";
     if (!empty($status_heading[$type])) {
