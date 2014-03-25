@@ -42,7 +42,6 @@ function product_post_type() {
 		'show_in_nav_menus'   => true,
 		'show_in_admin_bar'   => true,
 		'menu_position'       => 8,
-		'menu_icon'           => '',
 		'can_export'          => true,
 		'has_archive'         => true,
 		'exclude_from_search' => false,
@@ -97,7 +96,7 @@ add_action('customize_register', 'fik_stores_customizer');
 
 function get_fikstores_badge(){
 	$badge = get_theme_mod('fik_stores_badge', '');
-    $src = plugins_url( 'img/poweredbyfikstores' . $filename . '.png' , __FILE__ ) ;
+    $src = plugins_url( 'img/poweredbyfikstores' . $badge . '.png' , __FILE__ ) ;
 
     return '<a href="http://fikstores.com/" title="Better ecommerce">
     	<img width="105" height="50" src="' . $src . '" class="replace-2x fikstores-badge" alt="Better ecommerce">
@@ -206,6 +205,48 @@ function the_product_gallery_thumbnails($thumnail_size = 'post-thumbnail', $imag
 function the_store_logo($size = "full", $args = array('class' => 'logo')){
     $logo_id = get_option('_fik_store_logo');
     echo wp_get_attachment_image($logo_id, $size, false, $args);
+}
+
+/**
+ * Returns HTML for status and/or error messages, grouped by type.
+ *
+ * An invisible heading identifies the messages for assistive technology.
+ * Sighted users see a colored box. See http://www.w3.org/TR/WCAG-TECHS/H69.html
+ * for info.
+ *
+ * @param string $display
+ *   - display: (optional) Set to 'status', 'warning', 'help' or 'error' to display only messages
+ *     of that type.
+ */
+
+function fik_messages($display = FALSE, $messages = array ('status' => 'This is a test message')) {
+  $output = '';
+  $status_heading = array(
+    'success' => __('Status message', 'fik-stores'), 
+    'error' => __('Error message', 'fik-stores'), 
+    'warning' => __('Warning message', 'fik-stores'),
+    'info' => __('Info message', 'fik-stores'), 
+  );
+  foreach ($messages as $type => $messages) {
+    if ($type) $alert_class = "alert-" . $type;
+    $output .= "<div class=\"alert $alert_class\">\n";
+    if (!empty($status_heading[$type])) {
+      $output .= '<h4 class="hide">' . $status_heading[$type] . "</h4>\n";
+    }
+    if (count($messages) > 1) {
+      $output .= " <ul>\n";
+      foreach ($messages as $message) {
+        $output .= '  <li>' . $message . "</li>\n";
+      }
+      $output .= " </ul>\n";
+    }
+    else {
+      $output .= '<p>' . $messages[0] . '</p>';
+    }
+    $output .= "</div>\n";
+  }
+  $output = apply_filters( 'fik_messages', $output);
+  return $output;
 }
 
 ?>
