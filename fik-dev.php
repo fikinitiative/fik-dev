@@ -138,8 +138,8 @@ function get_fik_product_select_quantity(){
 	return '<div class="control-group product-quantity"><label class="control-label" for="quantity">Quantity</label><div class="controls"><input type="number" name="quantity" class="input-mini" min="1" max="10" step="1" value="1" required=""></div></div>';
 }
 
-function get_add_to_cart_button(){
-	return '<button type="submit" class="button alt btn btn-primary">Add to cart</button>';
+function get_add_to_cart_button($prodID, $buttonClasses = "button alt btn btn-primary"){
+	return '<button type="submit" class="' . $buttonClasses . '">Add to cart</button>';
 }
 
 
