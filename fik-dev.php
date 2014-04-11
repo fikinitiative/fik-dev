@@ -138,33 +138,35 @@ function get_fik_product_select_quantity(){
 	return '<div class="control-group product-quantity"><label class="control-label" for="quantity">Quantity</label><div class="controls"><input type="number" name="quantity" class="input-mini" min="1" max="10" step="1" value="1" required=""></div></div>';
 }
 
-function get_add_to_cart_button($prodID, $buttonClasses = "button alt btn btn-primary"){
+function get_add_to_cart_button($prodID = null, $buttonClasses = "button alt btn btn-primary"){
 	return '<button type="submit" class="' . $buttonClasses . '">Add to cart</button>';
 }
 
 
 function the_product_gallery_thumbnails($thumnail_size = 'post-thumbnail', $image_size = 'medium', $zoom_image_size = 'large'){
     $product_image = get_post_custom_values('product_image');
-    foreach ( $product_image as $key => $image_id ) {
-        $the_thumbnail = wp_get_attachment_image($image_id, $thumnail_size, false);
-        $the_image = get_post($image_id);
-        $the_image_url = wp_get_attachment_image_src($image_id, $image_size, false);
-        $the_zoom_image_url = wp_get_attachment_image_src($image_id, $zoom_image_size, false);
-        $thumblist[$image_id] = '<a target="_blank" href="' . $the_image_url[0] . '" title="' . $the_image->post_title . '" data-width="' . $the_image_url[1] . '" data-height="' . $the_image_url[2] . '" data-zoom-image="' . $the_zoom_image_url[0] . '" data-zoomimagewidth="' . $the_zoom_image_url[1] . '" data-zoomimageheight="' . $the_zoom_image_url[2] . '">' . $the_thumbnail . '</a>';
+    if ($product_image){
+      foreach ( $product_image as $key => $image_id ) {
+          $the_thumbnail = wp_get_attachment_image($image_id, $thumnail_size, false);
+          $the_image = get_post($image_id);
+          $the_image_url = wp_get_attachment_image_src($image_id, $image_size, false);
+          $the_zoom_image_url = wp_get_attachment_image_src($image_id, $zoom_image_size, false);
+          $thumblist[$image_id] = '<a target="_blank" href="' . $the_image_url[0] . '" title="' . $the_image->post_title . '" data-width="' . $the_image_url[1] . '" data-height="' . $the_image_url[2] . '" data-zoom-image="' . $the_zoom_image_url[0] . '" data-zoomimagewidth="' . $the_zoom_image_url[1] . '" data-zoomimageheight="' . $the_zoom_image_url[2] . '">' . $the_thumbnail . '</a>';
+      }
+
+      if ($thumblist == array())
+          return false;
+
+      $output = '<ul class="product-image-thumbnails thumbnails">';
+
+      foreach ($thumblist as $thumbnail) {
+          $output .= '<li class="thumbnail">' . $thumbnail . '</li>';
+      }
+
+      $output .= '</ul>';
+
+      echo $output;
     }
-
-    if ($thumblist == array())
-        return false;
-
-    $output = '<ul class="product-image-thumbnails thumbnails">';
-
-    foreach ($thumblist as $thumbnail) {
-        $output .= '<li class="thumbnail">' . $thumbnail . '</li>';
-    }
-
-    $output .= '</ul>';
-
-    echo $output;
     return;
 }
 
