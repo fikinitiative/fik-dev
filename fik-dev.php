@@ -5,7 +5,7 @@
    Description: Fik Stores Themes development helper plugin
    Version: 1.0
    Author: Fik Stores
-   Author URI: http://fik3tores.com
+   Author URI: http://fikstores.com
    License: GPL2
    */
 
