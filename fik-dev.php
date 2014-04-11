@@ -5,7 +5,7 @@
    Description: Fik Stores Themes development helper plugin
    Version: 1.0
    Author: Fik Stores
-   Author URI: http://fikstores.com
+   Author URI: http://fik3tores.com
    License: GPL2
    */
 
@@ -44,6 +44,13 @@ function product_post_type() {
 		'menu_position'       => 8,
 		'can_export'          => true,
 		'has_archive'         => true,
+    'rewrite' => array(
+      'slug' => 'products',
+        'with_front' => false ,
+        'feeds' => true,
+        'pages' => true
+      ),
+    'query_var' => 'product',
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
 		'capability_type'     => 'post',
