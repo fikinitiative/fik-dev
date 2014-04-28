@@ -131,7 +131,8 @@ function the_fik_add_to_cart_button(){
 }
 
 function get_fik_product_select_variations(){
-	return '';
+  //The following example shows womens shoe sizes from 36 to 41
+	return '<div class="control-group product-variations"><label class="control-label" for="variation-16">Talla mujer</label><div class="controls"><select name="variation-16" id="vv-talla-mujer"><option value="">Selecciona una opción …</option><option value="17">36</option><option value="18">37</option><option value="19">38</option><option value="20">39</option><option value="21">40</option><option value="22">41</option></select></div></div>';
 }
 
 function get_fik_product_select_quantity(){
@@ -222,5 +223,12 @@ function fik_messages($display = FALSE, $message = array ('error' => "This is a 
   $output = apply_filters( 'fik_messages', $output);
   return $output;
 }
+
+function the_store_logo($size = "full", $args = array('class' => 'logo')){
+    $logo_id = get_option('fik_store_logo');
+    echo wp_get_attachment_image($logo_id, $size, false, $args);
+}
+
+
 
 ?>
