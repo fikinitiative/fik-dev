@@ -172,12 +172,6 @@ function the_product_gallery_thumbnails($thumnail_size = 'post-thumbnail', $imag
 }
 
 
-
-function the_store_logo($size = "full", $args = array('class' => 'logo')){
-    $logo_id = get_option('_fik_store_logo');
-    echo wp_get_attachment_image($logo_id, $size, false, $args);
-}
-
 /**
  * Returns HTML for status and/or error messages, grouped by type.
  *
