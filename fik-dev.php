@@ -280,3 +280,49 @@ function store_sections_create_widget(){
 }
 add_action('widgets_init','store_sections_create_widget');
 
+function the_fik_checkout()
+{
+    ?>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="cart_image">Imagen</th>
+          <th>Elemento</th>
+          <th>Cantidad</th>
+          <th class="hidden-phone">Precio unitario</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="cart_item_row" id="cart_item_0"><td class="cart_image"><a href="#"><img alt="Producto de ejemplo" src="http://placekitten.com/200"></a></td>
+          <td><a href="#">My product</a><br>L</td>
+          <td><form method="post" action="">
+            <input type="hidden" value="" name="cart_item_0"><input type="number" required="" class="input-mini" placeholder="2" value="2" step="1" max="10" min="0" name="cart_item_0_quantity"><button name="update_quantity" class="cart_item_update btn btn-small" type="submit" style="display: none;">Actualizar</button></form></td>
+          <td><span class="price" itemprop="price">€ <span class="amount">10,00</span></span></td>
+          <td> <span class="price" itemprop="price">€ <span class="amount">20,00</span></span> </td>
+        </tr>
+        <tr class="cart_item_row" id="cart_item_1"><td class="cart_image"><a href="#"><img alt="Cabeza de toro" src="http://placekitten.com/200"></a></td>
+          <td><a href="#">Best product</a><br></td>
+          <td><form method="post" action="">
+            <input type="hidden" value="" name="cart_item_1"><input type="number" required="" class="input-mini" placeholder="1" value="1" step="1" max="10" min="0" name="cart_item_1_quantity"><button name="update_quantity" class="cart_item_update btn btn-small" type="submit" style="display: none;">Actualizar</button></form></td>
+          <td><span class="price" itemprop="price">€ <span class="amount">826,45</span></span></td>
+          <td><span class="price" itemprop="price">€ <span class="amount">826,45</span></span></td>
+        </tr>
+        <tr class="cart_item_row" id="cart_item_2"><td class="cart_image"><a href="#"><img alt="Cabeza de toro" src="http://placekitten.com/200"></a></td>
+          <td><a href="#">Our product</a><br></td>
+          <td><form method="post" action="">
+            <input type="hidden" value="" name="cart_item_1"><input type="number" required="" class="input-mini" placeholder="1" value="1" step="1" max="10" min="0" name="cart_item_1_quantity"><button name="update_quantity" class="cart_item_update btn btn-small" type="submit" style="display: none;">Actualizar</button></form></td>
+          <td><span class="price" itemprop="price">€ <span class="amount">40</span></span></td>
+          <td> <span class="price" itemprop="price">€ <span class="amount">40</span></span> </td>
+        </tr>
+        <tr class="fik-cart-subtotal-row">
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><strong>Subtotal</strong></td>
+          <td><strong><span class="price" itemprop="price">€ <span class="amount">886,45</span></span></strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <?php
+}
