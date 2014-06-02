@@ -223,6 +223,60 @@ function the_store_logo($size = "full", $args = array('class' => 'logo')){
     echo wp_get_attachment_image($logo_id, $size, false, $args);
 }
 
+// Store sections
+function _storecats_init() {
+    // Add new taxonomy, make it hierarchical (like categories)
+    $labels = array(
+        'name' => 'Store Sections',
+        'singular_name' => _x('Store Section', 'taxonomy singular name' , 'fik-dev' ),
+        'search_items' => __('Search Store Sections' , 'fik-dev'),
+        'popular_items' => null, // null so popular categories will not be displayed in edit-tags.php admin page for this taxonomy
+        'all_items' => __('All Store Sections' , 'fik-dev'),
+        'parent_item' => __('Parent Store Section' , 'fik-dev'),
+        'parent_item_colon' => __('Parent Store Section:' , 'fik-dev'),
+        'edit_item' => __('Edit Store Section' , 'fik-dev'),
+        'update_item' => __('Update Store Section' , 'fik-dev'),
+        'add_new_item' => __('Add New Store Section' , 'fik-dev'),
+        'new_item_name' => __('New Store Section Name' , 'fik-dev'),
+        'menu_name' => __('Store Sections' , 'fik-dev'),
+    );
 
+    register_taxonomy('store-section', array('fik_product'), array(
+        'hierarchical' => true,
+        'label' => _x('Store Sections', 'taxonomy general name' , 'fik-dev' ),
+        'labels' => $labels,
+        'show_in_nav_menus' => true,
+        'show_ui' => true,
+        'query_var' => true,
+        'rewrite' => array(
+            'slug' => 'section',
+            'with_front' => true,
+            'hierarchical' => true
+        ),
+    ));
+}
+add_action('init', '_storecats_init', 0);
 
-?>
+class store_sections_widget extends WP_Widget {
+
+    function store_sections_widget(){
+        $widget_ops = array('classname' => 'store_sections_widget', 'description' => "Display the store sections belongs to a product" );
+        $this->WP_Widget('store_sections_widget', "Store Sections Widget", $widget_ops);
+    }
+
+    function widget($args,$instance){
+        echo '<div class="product-store-categories">' . get_the_term_list($post->ID, 'store-section', '', ', ', '' ) . '</div>';
+    }
+
+    function update($new_instance, $old_instance){
+    }
+
+    function form($instance){
+    }
+}
+
+function store_sections_create_widget(){
+    register_widget('store_sections_widget');
+}
+add_action('widgets_init','store_sections_create_widget');
+
