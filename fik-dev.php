@@ -63,6 +63,78 @@ function product_post_type() {
 add_action( 'init', 'product_post_type', 0 );
 
 
+// Add the Store Section taxonomy for products
+
+function store_sections_init() {
+    // Add new taxonomy, make it hierarchical (like categories)
+    $labels = array(
+        'name' => _x('Store Sections', 'taxonomy general name' , 'fik-stores' ),
+        'singular_name' => _x('Store Section', 'taxonomy singular name' , 'fik-stores' ),
+        'search_items' => __('Search Store Sections' , 'fik-stores'),
+        'popular_items' => null, // null so popular categories will not be displayed in edit-tags.php admin page for this taxonomy
+        'all_items' => __('All Store Sections' , 'fik-stores'),
+        'parent_item' => __('Parent Store Section' , 'fik-stores'),
+        'parent_item_colon' => __('Parent Store Section:' , 'fik-stores'),
+        'edit_item' => __('Edit Store Section' , 'fik-stores'),
+        'update_item' => __('Update Store Section' , 'fik-stores'),
+        'add_new_item' => __('Add New Store Section' , 'fik-stores'),
+        'new_item_name' => __('New Store Section Name' , 'fik-stores'),
+        'menu_name' => __('Store Sections' , 'fik-stores'),
+    );
+
+    register_taxonomy('store-section', array('fik_product'), array(
+        'hierarchical' => true,
+        'label' => _x('Store Sections', 'taxonomy general name' , 'fik-stores' ),
+        'labels' => $labels,
+        'show_in_nav_menus' => true,
+        'show_ui' => true,
+        'query_var' => true,
+        'rewrite' => array(
+            'slug' => 'section',
+            'with_front' => true,
+            'hierarchical' => true
+        ),
+    ));
+}
+
+add_action('init', 'store_sections_init', 0);
+
+// Add Custom Product Variations
+
+function _fik_product_vars_init() {
+    // Add new taxonomy, make it hierarchical (like categories)
+    $labels = array(
+        'name' => _x('Product Variations', 'taxonomy general name' , 'fik-stores' ),
+        'singular_name' => _x('Product Variation', 'taxonomy singular name' , 'fik-stores' ),
+        'search_items' => __('Search Product Variations' , 'fik-stores'),
+        'popular_items' => null,
+        'all_items' => __('All Product Variations' , 'fik-stores'),
+        'parent_item' => __('Parent Product Variation' , 'fik-stores'),
+        'parent_item_colon' => __('Parent Product Variation:' , 'fik-stores'),
+        'edit_item' => __('Edit Product Variation' , 'fik-stores'),
+        'update_item' => __('Update Product Variation' , 'fik-stores'),
+        'add_new_item' => __('Add New Product Variation' , 'fik-stores'),
+        'new_item_name' => __('New Product Variation Name' , 'fik-stores'),
+        'menu_name' => __('Product Variations' , 'fik-stores'),
+    );
+
+    register_taxonomy('product-variation', array('fik_product'), array(
+        'hierarchical' => true,
+        'label' => _x('Product Variations', 'taxonomy general name' , 'fik-stores' ),
+        'labels' => $labels,
+        'show_in_nav_menus' => true,
+        'show_ui' => true,
+        'query_var' => true,
+        'rewrite' => array(
+            'slug' => 'product-variation',
+            'with_front' => true,
+            'hierarchical' => true
+        ),
+    ));
+}
+
+add_action('init', '_fik_product_vars_init', 0);
+
 
 function fik_stores_customizer($wp_customize) {
 
