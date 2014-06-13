@@ -123,6 +123,10 @@ function the_fik_price(){
 
 }
 
+function fik_product_sku(){
+    return '140702/JINGLE';
+}
+
 function the_fik_add_to_cart_button(){
 	echo('<form action="" class="fik_add_cart" method="post" enctype="multipart/form-data"><input type="hidden" name="store_product_id" value="38">'
 		. get_fik_product_select_variations() . get_fik_product_select_quantity() . get_add_to_cart_button() .
