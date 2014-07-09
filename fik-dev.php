@@ -488,3 +488,118 @@ function the_fik_checkout()
     </table>
     <?php
 }
+
+
+
+add_image_size('largest', 1200, 1200);
+
+function fik_slider($atts) {
+    global $wp_query;
+    if (isset($atts['ids'])) {
+        $ids = explode(',', $atts['ids']);
+        if (is_array($ids)) {
+            if (!isset($atts['indicators'])) {
+                $atts['indicators'] = 'true';
+            }
+            if (!isset($atts['indicators'])) {
+                $atts['indicators'] = 'true';
+            }
+            if (!isset($atts['navigation'])) {
+                $atts['navigation'] = 'true';
+            }
+            if (!isset($atts['captions'])) {
+                $atts['captions'] = 'true';
+            }
+            if (!isset($atts['max-width'])) {
+                $atts['max-width'] = '100%';
+            }
+            if (!isset($atts['id'])) {
+                $atts['id'] = 'myCarousel';
+            }
+            $slides = array();
+            foreach ($ids as $key => $id) {
+                $image = wp_get_attachment_image($id, 'largest');
+                if ($image != '') {
+                    $slides[$key]['id'] = $id;
+                    $slides[$key]['img'] = $image;
+                    $attachment = get_post($id);
+                    $slides[$key]['title'] = $attachment->post_title;
+                    $slides[$key]['description'] = $attachment->post_content;
+                    if (isset($atts['link' . $id])) {
+                        $slides[$key]['link'] = $atts['link' . $id];
+                    }
+                } else {
+                    unset($slides[$key]);
+                }
+            }
+            $slides = array_values($slides);
+            if ($slides != array()) {
+                //We show the slider
+                // Add javascript and css to output!
+                if(!current_theme_supports('bootstrap-3')) {
+                    wp_enqueue_script('bootstrap-carousel', '/wp-content/mu-plugins/assets/js/bootstrap-carousel.js', array('jquery'), '1.01', true);
+                    wp_enqueue_style('bootstrap-carousel', '/wp-content/mu-plugins/assets/css/fik-bootstrap-carousel.css');
+                }
+                $maxwidth = ' style="max-width:' . $atts['max-width'] . ';"';
+                echo('<div id="' . $atts['id'] . '" class="carousel slide"' . $maxwidth . '>');
+                // Carousel Indicators
+                if ((isset($atts['indicators'])) && ($atts['indicators'] == 'true')) {
+                    echo('<ol class="carousel-indicators">');
+                    foreach ($slides as $key => $slide) {
+                        if ($key == 0) {
+                            $class = ' class="active"';
+                        } else {
+                            $class = '';
+                        }
+                        echo('<li data-target="#' . $atts['id'] . '" data-slide-to="' . $key . '"' . $class . '></li>');
+                    }
+                    echo('</ol>');
+                }
+                // Carousel Items
+                echo ('<div class="carousel-inner">');
+                foreach ($slides as $key => $slide) {
+                    if ($key == 0) {
+                        $class = ' class="active item"';
+                    } else {
+                        $class = ' class="item"';
+                    }
+                    echo('<div' . $class . '>');
+                    // Image with or without link:
+                    if (isset($slide['link'])) {
+                        echo('<a href="' . $slide['link'] . '" title="' . $slide['title'] . '">');
+                        echo($slide['img']);
+                        echo('</a>');
+                    } else {
+                        echo($slide['img']);
+                    }
+                    // Image caption if requested:
+                    if ((isset($atts['captions'])) && ($atts['captions'] == 'true')) {
+                        echo('<div class="carousel-caption">');
+                        echo('<h4>' . $slide['title'] . '</h4>');
+                        echo('<p>' . $slide['description'] . '</p>');
+                        echo('</div>');
+                    }
+                    echo('</div>'); // Closes each of the slides
+                }
+                echo('</div>'); // Closes carousel-inner
+                // Carousel Navigation
+                if ((isset($atts['navigation'])) && ($atts['navigation'] == 'true')) {
+                    echo('<a class="carousel-control left" href="#' . $atts['id'] . '" data-slide="prev">&lsaquo;</a>');
+                    echo('<a class="carousel-control right" href="#' . $atts['id'] . '" data-slide="next">&rsaquo;</a>');
+                }
+                echo('</div>'); // Closes carousel
+            }
+        }
+
+        if (isset($atts['width']))
+            $width = $atts['width']; else
+            $width = "100%";
+        if (isset($atts['height']))
+            $height = $atts['height']; else
+            $height = "100%";
+        ?>
+        <?php
+    }
+}
+
+add_shortcode('fikslider', 'fik_slider');
