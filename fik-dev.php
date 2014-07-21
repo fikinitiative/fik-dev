@@ -447,8 +447,9 @@ function the_fik_checkout()
     echo $fik_cart->build_cart();
 }
 
-function fik_order_cookie_get() {
+function fik_order_get() {
     $cookie_name = 'dev-store';
+    //TODO: get form options or localstorage
      if (isset($_COOKIE[$cookie_name]) && ($_COOKIE[$cookie_name] != FALSE)) {
         $order_cookie = unserialize(urldecode($_COOKIE[$cookie_name]));
     }else{

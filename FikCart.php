@@ -11,8 +11,8 @@ class FikCart
 
     public function build_cart()
     {
-        $order_cookie = fik_order_cookie_get();
-        if($failedPrecondition = $this->hasFailedPreconditions($order_cookie)) {
+        $order = fik_order_get();
+        if($failedPrecondition = $this->hasFailedPreconditions($order)) {
 
             return $failedPrecondition;
         }
