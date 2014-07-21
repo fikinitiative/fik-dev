@@ -174,11 +174,11 @@ function the_fik_add_to_cart_button(){
 
 function get_fik_product_select_variations(){
   //The following example shows womens shoe sizes from 36 to 41
-	return '<div class="control-group product-variations"><label class="control-label" for="variation-16">Talla mujer</label><div class="controls"><select name="variation-16" id="vv-talla-mujer"><option value="">Selecciona una opción …</option><option value="17">36</option><option value="18">37</option><option value="19">38</option><option value="20">39</option><option value="21">40</option><option value="22">41</option></select></div></div>';
+	return '<div class="control-group product-variations"><label class="control-label" for="variation-16">Talla mujer</label><div class="controls"><select name="variation-16" id="vv-talla-mujer" class="form-control"><option value="">Selecciona una opción …</option><option value="17">36</option><option value="18">37</option><option value="19">38</option><option value="20">39</option><option value="21">40</option><option value="22">41</option></select></div></div>';
 }
 
 function get_fik_product_select_quantity(){
-	return '<div class="control-group product-quantity"><label class="control-label" for="quantity">Quantity</label><div class="controls"><input type="number" name="quantity" class="input-mini" min="1" max="10" step="1" value="1" required=""></div></div>';
+	return '<div class="control-group product-quantity"><label class="control-label" for="quantity">Quantity</label><div class="controls"><input type="number" name="quantity" class="input-mini form-control" min="1" max="10" step="1" value="1" required=""></div></div>';
 }
 
 function get_add_to_cart_button($prodID = null, $buttonClasses = "button alt btn btn-primary"){
