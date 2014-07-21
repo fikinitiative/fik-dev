@@ -41,8 +41,8 @@ class FikCart
             'after_header_element'  => '</th>',
             'before_body'           => '<tbody>',
             'after_body'            => '</tbody>',
-            'before_total'          => '<tr class="fik-cart-subtotal-row">',
-            'after_total'           => '</tr>',
+            'before_total'          => '<tfoot><tr class="fik-cart-subtotal-row">',
+            'after_total'           => '</tr></tfoot>',
             'before_total_element'  => '<td>',
             'after_total_element'   => '</td>',
             'cart_image_element'    => '<td class="cart_image"><a href="%s"><img src="%s" alt="%s"></a></td>',
@@ -63,6 +63,8 @@ class FikCart
 
     private function hasFailedPreconditions($order_cookie)
     {
+        return false;
+
         if(!$this->store_active()){
 
             return $this->store_not_active_message();
@@ -157,10 +159,50 @@ class FikCart
 
     private function cart_items($items)
     {
-        foreach ($items as $number => $checkoutItem) {
-            $checkoutTable .= $this->cart_row($this->row_calculate($number, $checkoutItem));
-            $cartTotal += get_the_fik_price($checkoutItem['product_id'], $checkoutItem['variations'], $checkoutItem['quantity']);
-        }
+        $checkoutTable .= $this->cart_row(
+            array(
+                "number"=>0,
+                "productUrl" => "#",
+                "productIMG" => "http://placekitten.com/200",
+                "productTitle" => "Producto de ejemplo 2",
+                "productDesc" => "M",
+                "checkoutItem" => "",
+                "productQuantity" => "2",
+                "productPrice" => "10,00 €",
+                "productSubotal" => "20,00 €"
+            )
+        );
+        $cartTotal += "20";
+
+        $checkoutTable .= $this->cart_row(
+            array(
+                "number"=>1,
+                "productUrl" => "#",
+                "productIMG" => "http://placekitten.com/200",
+                "productTitle" => "Producto de ejemplo 2",
+                "productDesc" => "M",
+                "checkoutItem" => "",
+                "productQuantity" => "1",
+                "productPrice" => "826,45 €",
+                "productSubotal" => "826,45 €"
+            )
+        );
+        $cartTotal += "826,45";
+
+        $checkoutTable .= $this->cart_row(
+            array(
+                "number"=>2,
+                "productUrl" => "#",
+                "productIMG" => "http://placekitten.com/200",
+                "productTitle" => "Producto de ejemplo 1",
+                "productDesc" => "M",
+                "checkoutItem" => "",
+                "productQuantity" => "1",
+                "productPrice" => "40,00 €",
+                "productSubotal" => "40,00 €"
+            )
+        );
+        $cartTotal += "40";
 
         return array('items' => $checkoutTable, 'total' => $cartTotal);
     }
@@ -224,7 +266,7 @@ class FikCart
                    '<strong>' . __('Subtotal', 'fik-stores') . '</strong>' .
                $this->format['after_total_element'] .
                $this->format['before_total_element'] .
-                   '<strong>' . fik_format_price($cartTotal) . '</strong>' .
+                   '<strong>' . $cartTotal . ' €</strong>' .
                $this->format['after_total_element'] .
                $this->format['after_total'];
     }
