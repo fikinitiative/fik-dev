@@ -43,8 +43,10 @@ class FikCart
             'after_body'            => '</tbody>',
             'before_total'          => '<tfoot><tr class="fik-cart-subtotal-row">',
             'after_total'           => '</tr></tfoot>',
-            'before_total_element'  => '<td>',
-            'after_total_element'   => '</td>',
+            'before_total_title'    => '<td colspan="4"><strong>',
+            'after_total_title'     => '</strong></td>',
+            'before_total_element'  => '<td><strong>',
+            'after_total_element'   => '</strong></td>',
             'cart_image_element'    => '<td class="cart_image"><a href="%s"><img src="%s" alt="%s"></a></td>',
             'product_name_element'  => '<td><a href="%s">%s</a><br/>%s</td>',
             'quantity_form'         => '<td><form action="" method="post"><input type="hidden" name="cart_item_%s" value="%s">
@@ -253,20 +255,11 @@ class FikCart
     private function cart_total($cartTotal)
     {
         return $this->format['before_total'] .
+               $this->format['before_total_title'] .
+                   __('Subtotal', 'fik-stores') .
+               $this->format['after_total_title'] .
                $this->format['before_total_element'] .
-                   '&nbsp' .
-               $this->format['after_total_element'] .
-               $this->format['before_total_element'] .
-                   '&nbsp' .
-               $this->format['after_total_element'] .
-               $this->format['before_total_element'] .
-                   '&nbsp' .
-               $this->format['after_total_element'] .
-               $this->format['before_total_element'] .
-                   '<strong>' . __('Subtotal', 'fik-stores') . '</strong>' .
-               $this->format['after_total_element'] .
-               $this->format['before_total_element'] .
-                   '<strong>' . $cartTotal . ' €</strong>' .
+                   $cartTotal .
                $this->format['after_total_element'] .
                $this->format['after_total'];
     }
