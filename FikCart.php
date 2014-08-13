@@ -52,7 +52,7 @@ class FikCart
             'quantity_form'         => '<td><form action="" method="post"><input type="hidden" name="cart_item_%s" value="%s">
                                         <input type="number" name="cart_item_%s_quantity" min="0" max="10" step="1" value="%s"
                                         placeholder="%s" class="input-mini" required="">
-                                        <button type="submit" class="cart_item_update btn btn-small btn-info" name="update_quantity">%s</button></form></td>',
+                                        <button type="submit" class="cart_item_update btn btn-small btn-primary" name="update_quantity">%s</button></form></td>',
             'product_price'         => '<td>%s</td>',
             'product_subtotal'      => '<td>%s</td>',
             'checkout_form'         => '<form action="" class="fik_to_checkout text-center" method="post" enctype="multipart/form-data">
