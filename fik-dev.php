@@ -552,8 +552,8 @@ function fik_slider($atts) {
                 echo('</div>'); // Closes carousel-inner
                 // Carousel Navigation
                 if ((isset($atts['navigation'])) && ($atts['navigation'] == 'true')) {
-                    echo('<a class="carousel-control left" href="#' . $atts['id'] . '" data-slide="prev">&lsaquo;</a>');
-                    echo('<a class="carousel-control right" href="#' . $atts['id'] . '" data-slide="next">&rsaquo;</a>');
+                    echo('<a class="carousel-control left" href="#' . $atts['id'] . '" data-slide="prev"><span>&lsaquo;</span></a>');
+                    echo('<a class="carousel-control right" href="#' . $atts['id'] . '" data-slide="next"><span>&rsaquo;</span></a>');
                 }
                 echo('</div>'); // Closes carousel
             }
