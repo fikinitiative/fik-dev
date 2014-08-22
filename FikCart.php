@@ -165,7 +165,7 @@ class FikCart
             array(
                 "number"=>0,
                 "productUrl" => "#",
-                "productIMG" => "http://placekitten.com/g/300/300",
+                "productIMG" => "http://placekitten.com/g/200/200",
                 "productTitle" => "Producto de ejemplo 3",
                 "productDesc" => "M",
                 "checkoutItem" => "",
@@ -180,7 +180,7 @@ class FikCart
             array(
                 "number"=>1,
                 "productUrl" => "#",
-                "productIMG" => "http://placekitten.comg/g/300/300",
+                "productIMG" => "http://placekitten.com/g/200/200",
                 "productTitle" => "Producto de ejemplo 2",
                 "productDesc" => "M",
                 "checkoutItem" => "",
@@ -195,7 +195,7 @@ class FikCart
             array(
                 "number"=>2,
                 "productUrl" => "#",
-                "productIMG" => "http://placekitten.com/g/300/300",
+                "productIMG" => "http://placekitten.com/g/200/200",
                 "productTitle" => "Producto de ejemplo 1",
                 "productDesc" => "M",
                 "checkoutItem" => "",
