@@ -571,3 +571,47 @@ function fik_slider($atts) {
 }
 
 add_shortcode('fikslider', 'fik_slider');
+
+/*
+ * Add a list of products through the product content field by adding a shortcode life [fiksection slug="slug"]
+ */
+
+function fik_section_product_list_in_content($atts) {
+    global $wp_query;
+    if (isset($atts['slug'])) {
+        $args = array(
+            'post_type' => 'fik_product',
+            'tax_query' => array(
+                'relation' => 'OR',
+                array(
+                    'taxonomy' => 'store-section',
+                    'field' => 'slug',
+                    'terms' => $atts['slug']
+                )
+            )
+        );
+        $temp_query = $wp_query;
+        query_posts($args);
+        if ($wp_query->have_posts()) {
+            ?>
+            <ul class="product-list">
+                <?php
+                /* Start the Loop */
+                while (have_posts()) : the_post();
+
+                    /* Include the post format-specific template for the content. If you want to
+                     * this in a child theme then include a file called called content-___.php
+                     * (where ___ is the post format) and that will be used instead.
+                     */
+                    get_template_part('content', 'fik_product');
+
+                endwhile;
+                ?>
+            </ul>
+            <?php
+        }
+        $wp_query = $temp_query;
+    }
+}
+
+add_shortcode('fiksection', 'fik_section_product_list_in_content');
