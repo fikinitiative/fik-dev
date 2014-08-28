@@ -615,3 +615,6 @@ function fik_section_product_list_in_content($atts) {
 }
 
 add_shortcode('fiksection', 'fik_section_product_list_in_content');
+
+/* Add a shortcode for the cart page*/
+add_shortcode('cart-page', 'the_fik_checkout');
