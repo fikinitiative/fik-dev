@@ -156,7 +156,7 @@ function the_fikstores_badge() {
 
 
 function the_fik_price(){
-	echo('<div class="product-price"><del><span itemprop="highPrice" class="highPrice"><span class="amount">29,00</span>€</span></del><span itemprop="price" class="price"><span class="amount">12,00</span>€</span></div>');
+	echo('<del><span itemprop="highPrice" class="highPrice"><span class="amount">29,00</span>€</span></del><span itemprop="price" class="price"><span class="amount">12,00</span>€</span>');
 	return;
 
 }
