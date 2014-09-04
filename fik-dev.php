@@ -186,6 +186,10 @@ function get_add_to_cart_button($prodID = null, $buttonClasses = "button alt btn
 }
 
 
+function get_the_product_gallery_thumbnails() {
+    return get_post_custom_values('product_image');
+}
+
 function the_product_gallery_thumbnails($thumnail_size = 'post-thumbnail', $image_size = 'medium', $zoom_image_size = 'large'){
     $product_image = get_post_custom_values('product_image');
     if ($product_image){
