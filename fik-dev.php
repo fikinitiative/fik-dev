@@ -155,10 +155,14 @@ function the_fikstores_badge() {
 }
 
 
-function the_fik_price(){
-	echo('<del><span itemprop="highPrice" class="highPrice"><span class="amount">29,00</span>€</span></del><span itemprop="price" class="price"><span class="amount">12,00</span>€</span>');
+function the_fik_previous_price(){
+	echo('<del><span itemprop="highPrice" class="highPrice"><span class="amount">29,00</span>€</span></del>');
 	return;
+}
 
+function the_fik_price(){
+	echo('<span itemprop="price" class="price"><span class="amount">12,00</span>€</span>');
+	return;
 }
 
 function fik_product_sku(){
