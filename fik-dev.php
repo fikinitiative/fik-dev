@@ -449,10 +449,14 @@ function store_sections_create_widget(){
 }
 add_action('widgets_init','store_sections_create_widget');
 
+function get_fik_checkout(){
+    $fik_cart = new FikCart();
+    return $fik_cart->build_cart();
+}
+
 function the_fik_checkout()
 {
-    $fik_cart = new FikCart();
-    echo $fik_cart->build_cart();
+    echo get_fik_checkout();
 }
 
 function fik_order_get() {
@@ -618,4 +622,4 @@ function fik_section_product_list_in_content($atts) {
 add_shortcode('fiksection', 'fik_section_product_list_in_content');
 
 /* Add a shortcode for the cart page*/
-add_shortcode('cart-page', 'the_fik_checkout');
+add_shortcode('cart-page', 'get_fik_checkout');
