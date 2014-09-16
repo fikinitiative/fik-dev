@@ -155,10 +155,14 @@ function the_fikstores_badge() {
 }
 
 
-function the_fik_price(){
-	echo('<del><span itemprop="highPrice" class="highPrice"><span class="amount">29,00</span>€</span></del><span itemprop="price" class="price"><span class="amount">12,00</span>€</span>');
+function the_fik_previous_price(){
+	echo('<del><span itemprop="highPrice" class="highPrice"><span class="amount">29,00</span>€</span></del>');
 	return;
+}
 
+function the_fik_price(){
+	echo('<span itemprop="price" class="price"><span class="amount">12,00</span>€</span>');
+	return;
 }
 
 function fik_product_sku(){
@@ -185,6 +189,10 @@ function get_add_to_cart_button($prodID = null, $buttonClasses = "button alt btn
 	return '<button type="submit" class="' . $buttonClasses . '">Add to cart</button>';
 }
 
+
+function get_the_product_gallery_thumbnails() {
+    return get_post_custom_values('product_image');
+}
 
 function the_product_gallery_thumbnails($thumnail_size = 'post-thumbnail', $image_size = 'medium', $zoom_image_size = 'large'){
     $product_image = get_post_custom_values('product_image');
