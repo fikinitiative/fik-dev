@@ -509,64 +509,57 @@ function fik_slider($atts) {
                     wp_enqueue_style('bootstrap-carousel', '/wp-content/mu-plugins/assets/css/fik-bootstrap-carousel.css');
                 }
                 $maxwidth = ' style="max-width:' . $atts['max-width'] . ';"';
-                echo('<div id="' . $atts['id'] . '" class="carousel slide"' . $maxwidth . '>');
+                $slider = '<div id="' . $atts['id'] . '" class="carousel slide"' . $maxwidth . '>';
                 // Carousel Indicators
                 if ((isset($atts['indicators'])) && ($atts['indicators'] == 'true')) {
-                    echo('<ol class="carousel-indicators">');
+                    $slider .= '<ol class="carousel-indicators">';
                     foreach ($slides as $key => $slide) {
                         if ($key == 0) {
                             $class = ' class="active"';
                         } else {
                             $class = '';
                         }
-                        echo('<li data-target="#' . $atts['id'] . '" data-slide-to="' . $key . '"' . $class . '></li>');
+                        $slider .= '<li data-target="#' . $atts['id'] . '" data-slide-to="' . $key . '"' . $class . '></li>';
                     }
-                    echo('</ol>');
+                    $slider .= '</ol>';
                 }
                 // Carousel Items
-                echo ('<div class="carousel-inner">');
+                $slider .= '<div class="carousel-inner">';
                 foreach ($slides as $key => $slide) {
                     if ($key == 0) {
                         $class = ' class="active item"';
                     } else {
                         $class = ' class="item"';
                     }
-                    echo('<div' . $class . '>');
+                    $slider .= '<div' . $class . '>';
                     // Image with or without link:
                     if (isset($slide['link'])) {
-                        echo('<a href="' . $slide['link'] . '" title="' . $slide['title'] . '">');
-                        echo($slide['img']);
-                        echo('</a>');
+                        $slider .= '<a href="' . $slide['link'] . '" title="' . $slide['title'] . '">';
+                        $slider .= $slide['img'];
+                        $slider .= '</a>';
                     } else {
-                        echo($slide['img']);
+                        $slider .= $slide['img'];
                     }
                     // Image caption if requested:
                     if ((isset($atts['captions'])) && ($atts['captions'] == 'true')) {
-                        echo('<div class="carousel-caption">');
-                        echo('<h4>' . $slide['title'] . '</h4>');
-                        echo('<p>' . $slide['description'] . '</p>');
-                        echo('</div>');
+                        $slider .= '<div class="carousel-caption">';
+                        $slider .= '<h4>' . $slide['title'] . '</h4>';
+                        $slider .= '<p>' . $slide['description'] . '</p>';
+                        $slider .= '</div>';
                     }
-                    echo('</div>'); // Closes each of the slides
+                    $slider .= '</div>'; // Closes each of the slides
                 }
-                echo('</div>'); // Closes carousel-inner
+                $slider .= '</div>'; // Closes carousel-inner
                 // Carousel Navigation
                 if ((isset($atts['navigation'])) && ($atts['navigation'] == 'true')) {
-                    echo('<a class="carousel-control left" href="#' . $atts['id'] . '" data-slide="prev"><span>&lsaquo;</span></a>');
-                    echo('<a class="carousel-control right" href="#' . $atts['id'] . '" data-slide="next"><span>&rsaquo;</span></a>');
+                    $slider .= '<a class="carousel-control left" href="#' . $atts['id'] . '" data-slide="prev"><span>&lsaquo;</span></a>';
+                    $slider .= '<a class="carousel-control right" href="#' . $atts['id'] . '" data-slide="next"><span>&rsaquo;</span></a>';
                 }
-                echo('</div>'); // Closes carousel
+                $slider .= '</div>'; // Closes carousel
             }
         }
 
-        if (isset($atts['width']))
-            $width = $atts['width']; else
-            $width = "100%";
-        if (isset($atts['height']))
-            $height = $atts['height']; else
-            $height = "100%";
-        ?>
-        <?php
+        return $slider;
     }
 }
 
