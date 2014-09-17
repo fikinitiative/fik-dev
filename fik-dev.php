@@ -109,7 +109,7 @@ function fik_stores_customizer($wp_customize) {
         public $type = 'select';
 
         public function render_content() {
-        	$badge_colors = array('Default','Red', 'Green', 'Blue', 'Purple', 'Gray');
+        	$badge_colors = array('Default','Red', 'Green', 'Blue', 'Purple', 'Gray', 'SVGBlack', 'SVGWhite');
         	echo ('<label><span class="customize-control-title">' . esc_html($this->label) . '</span><select ' . $this->link() . '>');
         	foreach ($badge_colors as $color) {
         		echo ('<option value="' . ($color == $badge_colors[0] ? '': $color) . '"' . selected($this->value(), $color) . '>' .  $color . '</option>');
@@ -140,13 +140,20 @@ function fik_stores_customizer($wp_customize) {
 add_action('customize_register', 'fik_stores_customizer');
 
 function get_fikstores_badge(){
-	$badge = get_theme_mod('fik_stores_badge', '');
-    $src = plugins_url( 'img/poweredbyfikstores' . $badge . '.png' , __FILE__ ) ;
+    $badge_selected = get_theme_mod('fik_stores_badge', '');
 
-    return '<a href="http://fikstores.com/" title="Better ecommerce">
-    	<img width="105" height="50" src="' . $src . '" class="replace-2x fikstores-badge" alt="Better ecommerce">
-    	</a>';
+    if (strpos($badge_selected,'SVG') !== false){
+        $filename = 'poweredbyfikstores' . $badge_selected . '.svg';
+        $size = 'height="24"';
+        $class= 'class="fikstores-badge"';
+    }else{
+        $filename = 'poweredbyfikstores' . $badge_selected . '.png';
+        $size = 'width="105" height="50"';
+        $class= 'class="replace-2x fikstores-badge"';
+    }
 
+    $badge = sprintf ('<a href="http://fikstores.com/" title="Better ecommerce"><img %s src="/wp-content/mu-plugins/assets/img/%s" %s alt="Better ecommerce"></a>',  $size, $filename, $class);
+    return $badge;
 }
 
 function the_fikstores_badge() {
