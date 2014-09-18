@@ -161,15 +161,30 @@ function the_fikstores_badge() {
 	return;
 }
 
+function get_fik_previous_price(){
+  $previous_price = get_post_custom_values('previous_price');
+  $previous = sprintf('<del><span itemprop="highPrice" class="highPrice"><span class="amount">%s</span>€</span></del>', $previous_price);
+  return $previous;
+}
 
 function the_fik_previous_price(){
-	echo('<del><span itemprop="highPrice" class="highPrice"><span class="amount">29,00</span>€</span></del>');
+	echo get_fik_previous_price();
 	return;
+}
+function get_fik_price(){
+  $price = get_post_custom_values('price');
+  $current = sprintf('<span itemprop="price" class="price"><span class="amount">%s</span>€</span>', $price);
+  return $current;
 }
 
 function the_fik_price(){
-	echo('<span itemprop="price" class="price"><span class="amount">12,00</span>€</span>');
+	echo get_fik_price();
 	return;
+}
+
+function fik_product_stock_quantity(){
+  $quantity = get_post_custom_values('quantity');
+  return $quantity;
 }
 
 function fik_product_sku(){
