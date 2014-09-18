@@ -165,7 +165,11 @@ function the_fikstores_badge() {
 
 function get_fik_previous_price(){
   $previous_price = get_post_custom_values('previous_price');
-  $previous = sprintf('<del><span itemprop="highPrice" class="highPrice"><span class="amount">%s</span>€</span></del>', $previous_price[0]);
+  if ($previous_price[0]){
+    $previous = sprintf('<del><span itemprop="highPrice" class="highPrice"><span class="amount">%s</span>€</span></del>', $previous_price[0]);
+  }else{
+    $previous = false;
+  }
   return $previous;
 }
 
@@ -175,7 +179,11 @@ function the_fik_previous_price(){
 }
 function get_fik_price(){
   $price = get_post_custom_values('price');
-  $current = sprintf('<span itemprop="price" class="price"><span class="amount">%s</span>€</span>', $price[0]);
+  if ($price[0]){
+    $current = sprintf('<span itemprop="price" class="price"><span class="amount">%s</span>€</span>', $price[0]);
+  }else{
+    $current = false;
+  }
   return $current;
 }
 
@@ -186,11 +194,22 @@ function the_fik_price(){
 
 function fik_product_stock_quantity(){
   $quantity = get_post_custom_values('quantity');
-  return $quantity[0];
+  if ($quantity[0]){
+    $stock = $quantity[0];
+  }else{
+    $stock = false;
+  }
+  return $stock;
 }
 
 function fik_product_sku(){
-    return '140702/JINGLE';
+  $sku = get_post_custom_values('SKU');
+  if ($sku[0]){
+    $sku = $sku[0];
+  }else{
+    $sku = false;
+  }
+  return $sku; 
 }
 
 function the_fik_add_to_cart_button(){
