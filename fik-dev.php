@@ -165,7 +165,7 @@ function the_fikstores_badge() {
 
 function get_fik_previous_price(){
   $previous_price = get_post_custom_values('previous_price');
-  $previous = sprintf('<del><span itemprop="highPrice" class="highPrice"><span class="amount">%s</span>€</span></del>', $previous_price);
+  $previous = sprintf('<del><span itemprop="highPrice" class="highPrice"><span class="amount">%s</span>€</span></del>', $previous_price[0]);
   return $previous;
 }
 
@@ -175,7 +175,7 @@ function the_fik_previous_price(){
 }
 function get_fik_price(){
   $price = get_post_custom_values('price');
-  $current = sprintf('<span itemprop="price" class="price"><span class="amount">%s</span>€</span>', $price);
+  $current = sprintf('<span itemprop="price" class="price"><span class="amount">%s</span>€</span>', $price[0]);
   return $current;
 }
 
@@ -186,7 +186,7 @@ function the_fik_price(){
 
 function fik_product_stock_quantity(){
   $quantity = get_post_custom_values('quantity');
-  return $quantity;
+  return $quantity[0];
 }
 
 function fik_product_sku(){
