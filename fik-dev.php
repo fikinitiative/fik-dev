@@ -152,7 +152,9 @@ function get_fikstores_badge(){
         $class= 'class="replace-2x fikstores-badge"';
     }
 
-    $badge = sprintf ('<a href="http://fikstores.com/" title="Better ecommerce"><img %s src="/wp-content/mu-plugins/assets/img/%s" %s alt="Better ecommerce"></a>',  $size, $filename, $class);
+    $file = plugins_url('img/' . $filename, __FILE__);
+
+    $badge = sprintf ('<a href="http://fikstores.com/" title="Better ecommerce"><img %s src="%s" %s alt="Better ecommerce"></a>',  $size, $file, $class);
     return $badge;
 }
 
@@ -424,7 +426,7 @@ function logo_validate_settings($input)
 add_action('admin_menu', 'add_admin_menu');
 
 function add_admin_menu(){
-     add_menu_page( 'Options - Fik Theme DEV', 'Fik Theme DEV', 'manage_options', 'fikdev', 'fik_admin_function', $icon_url, $position ); 
+     add_menu_page( 'Options - Fik Theme DEV', 'Fik Theme DEV', 'manage_options', 'fikdev', 'fik_admin_function' );
  
 }
 
