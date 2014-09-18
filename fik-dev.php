@@ -145,7 +145,7 @@ function get_fikstores_badge(){
     if (strpos($badge_selected,'SVG') !== false){
         $filename = 'poweredbyfikstores' . $badge_selected . '.svg';
         $size = 'height="24"';
-        $class= 'class="fikstores-badge"';
+        $class= 'class="fikstores-badge badge-svg"';
     }else{
         $filename = 'poweredbyfikstores' . $badge_selected . '.png';
         $size = 'width="105" height="50"';
