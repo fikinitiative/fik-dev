@@ -666,3 +666,11 @@ add_shortcode('fiksection', 'fik_section_product_list_in_content');
 
 /* Add a shortcode for the cart page*/
 add_shortcode('cart-page', 'get_fik_checkout');
+
+/* Add JS for false cart badge */
+
+function cart_number_badge() {
+	wp_enqueue_script('cart-badge', plugins_url( 'cart-badge.js', __FILE__ ), array(), '1.0', true);
+}
+
+add_action( 'wp_enqueue_scripts', 'cart_number_badge' );
