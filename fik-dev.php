@@ -213,43 +213,41 @@ function fik_product_sku(){
 }
 
 function the_fik_add_to_cart_button(){
-	echo('<form action="" class="fik_add_cart" method="post" enctype="multipart/form-data"><input type="hidden" name="store_product_id" value="38">'
-		. get_fik_product_select_variations() . get_fik_product_select_quantity() . get_add_to_cart_button() .
-		'</form>');
-	return;
-}
-
-function get_fik_product_select_variations(){
-  $errorMessage = '';
   $variation = [
     'class' => '',
     'id' => '16',
     'slug' => 'talla-mujer',
     'name' => 'Talla mujer',
+    'values' => [
+        ['id' => '17',
+         'name' => '36',
+         'selected' => '',
+         'disabled' => ''],
+        ['id' => '18',
+         'name' => '37',
+         'selected' => '',
+         'disabled' => ''],
+        ['id' => '19',
+         'name' => '38',
+         'selected' => '',
+         'disabled' => ''],
+      ],
   ];
 
-  $variations = [
-    ['id' => '17',
-     'name' => '36',
-     'selected' => '',
-     'disabled' => ''],
-    ['id' => '18',
-     'name' => '37',
-     'selected' => '',
-     'disabled' => ''],
-    ['id' => '19',
-     'name' => '38',
-     'selected' => '',
-     'disabled' => ''],
-  ];
+	echo('<form action="" class="fik_add_cart" method="post" enctype="multipart/form-data"><input type="hidden" name="store_product_id" value="38">'
+		. get_fik_product_select_variations($variation) . get_fik_product_select_quantity() . get_add_to_cart_button() .
+		'</form>');
+	return;
+}
 
+function get_fik_product_select_variations($variation, $errorMessage = ''){
 
   if(current_theme_supports('bootstrap-3-forms')) {
     $template = '<div class="form-group' . $variation['class'] . '">';
     $template .= '<label for="vv-' . $variation['slug'] . '">' . $variation['name'] . '</label>';
     $template .= '<select name="variation-' . $variation['id'] . '" id="vv-' . $variation['slug'] . '" class="form-control">'; 
     $template .= '<option value="">Choose an option &hellip;</option>';
-    foreach ($variations as $variant) {
+    foreach ($variation['values'] as $variant) {
       if ($variant['disabled'] == true){
          $disabled = ' disabled = "disabled"';
       }else{
@@ -269,7 +267,7 @@ function get_fik_product_select_variations(){
     $template .= '<label class="control-label" for="variation-' . $variation['slug'] . '">' . $variation['name'] . '</label>';
     $template .= '<div class="controls"><select name="variation-' . $variation['id'] . '" id="vv-' . $variation['slug'] . '" class="form-control">'; 
     $template .= '<option value="">Choose an option &hellip;</option>';
-    foreach ($variations as $variant) {
+    foreach ($variation['values'] as $variant) {
       if ($variant['disabled'] == true){
          $disabled = ' disabled = "disabled"';
       }else{
