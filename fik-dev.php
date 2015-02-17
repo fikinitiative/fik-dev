@@ -220,15 +220,78 @@ function the_fik_add_to_cart_button(){
 }
 
 function get_fik_product_select_variations(){
-  //The following example shows womens shoe sizes from 36 to 41
-  return '<div class="control-group product-variations"><label class="control-label" for="variation-16">Talla mujer</label><div class="controls"><select name="variation-16" id="vv-talla-mujer" class="form-control"><option value="">Selecciona una opción …</option><option value="17">36</option><option value="18">37</option><option value="19">38</option><option value="20">39</option><option value="21">40</option><option value="22">41</option></select></div></div>';
+  $errorMessage = '';
+  $variation = [
+    'class' => '',
+    'id' => '16',
+    'slug' => 'talla-mujer',
+    'name' => 'Talla mujer',
+  ];
+
+  $variations = [
+    ['id' => '17',
+     'name' => '36',
+     'selected' => '',
+     'disabled' => ''],
+    ['id' => '18',
+     'name' => '37',
+     'selected' => '',
+     'disabled' => ''],
+    ['id' => '19',
+     'name' => '38',
+     'selected' => '',
+     'disabled' => ''],
+  ];
+
+
+  if(current_theme_supports('bootstrap-3-forms')) {
+    $template = '<div class="form-group' . $variation['class'] . '">';
+    $template .= '<label for="vv-' . $variation['slug'] . '">' . $variation['name'] . '</label>';
+    $template .= '<select name="variation-' . $variation['id'] . '" id="vv-' . $variation['slug'] . '" class="form-control">'; 
+    $template .= '<option value="">Choose an option &hellip;</option>';
+    foreach ($variations as $variant) {
+      if ($variant['disabled'] == true){
+         $disabled = ' disabled = "disabled"';
+      }else{
+        $disabled = '';
+      }
+      $template .= '<option value="' . $variant['id'] . '"' . $variant['selected'] . $disabled . '>' . $variant['name'] . '</option>';
+    }
+    $template .= '</select>';
+
+    if ($errorMessage != '') {
+        $template .= '<span class="help-inline">' . $errorMessage . '</span>';
+    }
+    $template .= '</div>';
+
+  }else{
+    $template = '<div class="control-group product-variations">';
+    $template .= '<label class="control-label" for="variation-' . $variation['slug'] . '">' . $variation['name'] . '</label>';
+    $template .= '<div class="controls"><select name="variation-' . $variation['id'] . '" id="vv-' . $variation['slug'] . '" class="form-control">'; 
+    $template .= '<option value="">Choose an option &hellip;</option>';
+    foreach ($variations as $variant) {
+      if ($variant['disabled'] == true){
+         $disabled = ' disabled = "disabled"';
+      }else{
+        $disabled = '';
+      }
+      $template .= '<option value="' . $variant['id'] . '"' . $variant['selected'] . $disabled . '>' . $variant['name'] . '</option>';
+    }
+    $template .= '</select>';
+
+    if ($errorMessage != '') {
+        $template .= '<span class="help-inline">' . $errorMessage . '</span>';
+    }
+    $template .= '</div></div>';
+  }
+
+  return $template;
 }
 
 function get_fik_product_select_quantity(){
   $class = 'product-quantity';
   $defaultValue = '1';
   $errorQuantity = '';
-
 
   if(current_theme_supports('bootstrap-3-forms')) {
     $quantitytemplate = '<div class="form-group ' . $class . '">';
