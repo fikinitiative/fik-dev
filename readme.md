@@ -4,7 +4,7 @@ This WordPress plugin enables theme developers to develop a [Fik Stores](http://
 # Installation
 
 1. Install in you /wp-content/plugins directory.
-2. Activate theme.
+2. Activate plugin.
 
 # Frequently Asked Questions
 In order to create a thumbnail gallery for products, you must add a Custom Field to the product, where the key will be "product_image" and the value will be the ID of the image uploaded to the WordPress media library. Add as meny "product_image" custom fields as images needed.
