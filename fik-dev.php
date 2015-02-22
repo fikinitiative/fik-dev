@@ -56,6 +56,7 @@ function _product_post_type() {
 		'exclude_from_search' => false,
 		'publicly_queryable'  => true,
 		'capability_type'     => 'post',
+    'menu_icon'           => 'dashicons-store'
 	);
 	register_post_type( 'fik_product', $args );
 
@@ -390,7 +391,9 @@ function fik_messages($display = FALSE, $message = array ('error' => "This is a 
 
 function the_store_logo($size = "full", $args = array('class' => 'logo')){
     $logo_id = get_option('fik_store_logo');
-    echo wp_get_attachment_image($logo_id['logo'], $size, false, $args);
+    if (is_array($logo_id)){
+      echo wp_get_attachment_image($logo_id['logo'], $size, false, $args);
+    }
 }
 
 // Store sections
@@ -445,17 +448,17 @@ function fik_register_settings()
 
     // Create textbox field
     $field_args = array(
-      'type'      => 'media_id',
+      'type'      => 'image',
       'id'        => 'logo',
       'name'      => 'logo_input',
-      'desc'      => 'Image ID from the <a href="./upload.php">media gallery</a>',
+      'desc'      => 'The main logo for your store',
       'std'       => '',
       'label_for' => 'logo_input',
-      'class'     => 'css_class',
+      'class'     => '',
       'option_name' => 'fik_store_logo'
     );
 
-    add_settings_field( 'logo_textbox', 'Store logo image ID', 'fik_display_setting', 'reading', 'fik_logo_section', $field_args );
+    add_settings_field( 'logo_textbox', 'Store logo', 'fik_display_setting', 'reading', 'fik_logo_section', $field_args );
 }
 
 /**
@@ -471,8 +474,7 @@ function fik_display_section($section){
  * In future you can add multiple types to be display from this function,
  * Such as checkboxes, select boxes, file upload boxes etc.
  */
-function fik_display_setting($args)
-{
+function fik_display_setting($args) {
     extract( $args );
     $options = get_option( $option_name );
 
@@ -487,13 +489,36 @@ function fik_display_setting($args)
               $options[$id] = esc_attr( $options[$id]);  
               echo "<input class='regular-text$class' type='text' id='$id' name='" . $option_name . "[$id]' value='$options[$id]' />";  
               echo ($desc != '') ? "<br /><span class='description'>$desc</span>" : "";  
-          break;  
-          case 'media_id':  
+              break;  
+          case 'media_id':
+            if (is_array($options) && array_key_exists($id, $options)){
               $options[$id] = stripslashes($options[$id]);  
-              $options[$id] = esc_attr( $options[$id]);  
-              echo "<input class='regular-text$class' type='number' id='$id' name='" . $option_name . "[$id]' value='$options[$id]' />";  
-              echo ($desc != '') ? "<br /><span class='description'>$desc</span>" : "";  
-          break;  
+              $value = esc_attr( $options[$id]);  
+            }
+            echo "<input class='regular-text$class' type='number' id='$id' name='" . $option_name . "[$id]' value='$value' />";  
+            echo ($desc != '') ? "<br /><span class='description'>$desc</span>" : "";
+            break; 
+          case 'image':
+            if (is_array($options) && array_key_exists($id, $options)){
+              $options[$id] = stripslashes($options[$id]);  
+              $value = esc_attr( $options[$id]);  
+            }
+            $remove = ($value == '') ? 'hidden' : '';
+            $select = ($value == '') ? '' : 'hidden';
+
+            $logo_id = get_option('fik_store_logo');
+            if (is_array($logo_id)){
+              $src = wp_get_attachment_url($logo_id['logo']);
+            }
+
+            echo "<div data-select-image='$id' data-button-text='Select $id'>";
+            echo "<input class='$id-value $class' type='hidden' id='$id' name='" . $option_name . "[$id]' value='$value' />";
+            echo "<img id='$id-img' src='$src' alt='Store $id' class='$remove' style='max-width: 70%;' />";
+            echo "<p><a id='$id-add' title='Choose $id' href='#' class='$select'>Select $id</a>";
+            echo "<a id='$id-remove' title='Remove $id' href='#' class='$remove' >Remove $id</a>"; 
+            echo "</p></div>";
+            echo ($desc != '') ? "<span class='description'>$desc</span>" : "";
+            break;  
     }
 }
 
@@ -501,18 +526,18 @@ function fik_display_setting($args)
  * Callback function to the register_settings function will pass through an input variable
  * You can then validate the values and the return variable will be the values stored in the database.
  */
-function logo_validate_settings($input)
-{
-  foreach($input as $k => $v)
-  {
-    $newinput[$k] = trim($v);
-    
-    // Check the input is a letter or a number
-    if(!preg_match('/^[A-Z0-9 _]*$/i', $v)) {
-      $newinput[$k] = '';
+function logo_validate_settings($input) {
+  $newinput = '';
+  if (is_array($input)){
+    foreach($input as $k => $v){
+      $newinput[$k] = trim($v);
+      
+      // Check the input is a letter or a number
+      if(!preg_match('/^[A-Z0-9 _]*$/i', $v)) {
+        $newinput[$k] = '';
+      }
     }
   }
-
   return $newinput;
 }
 
@@ -520,6 +545,15 @@ function logo_validate_settings($input)
 
 
 add_action('admin_menu', 'add_admin_menu');
+add_action('admin_enqueue_scripts', 'fik_enque_scripts');
+
+function fik_enque_scripts(){
+  wp_register_script( 'fik-dev', plugins_url() .'/fik-dev/js/fik-admin.js' );
+  if(get_current_screen() -> id == "toplevel_page_fikdev"){
+    wp_enqueue_media();
+    wp_enqueue_script('fik-dev');
+  }
+}
 
 function add_admin_menu(){
      add_menu_page( 'Options - Fik Theme DEV', 'Fik Theme DEV', 'manage_options', 'fikdev', 'fik_admin_function' );
