@@ -778,6 +778,9 @@ add_shortcode('fiksection', 'fik_section_product_list_in_content');
 /* Add a shortcode for the cart page*/
 add_shortcode('cart-page', 'get_fik_checkout');
 
+/* Shortcode to display posts */
+require 'extra/display-posts-shortcode.php';
+
 /* Add JS for false cart badge */
 
 function cart_number_badge() {
