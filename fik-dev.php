@@ -214,26 +214,26 @@ function fik_product_sku(){
 }
 
 function the_fik_add_to_cart_button(){
-  $variation = [
+  $variation = array(
     'class' => '',
     'id' => '16',
     'slug' => 'talla-mujer',
     'name' => 'Talla mujer',
-    'values' => [
-        ['id' => '17',
+    'values' => array(
+        array('id' => '17',
          'name' => '36',
          'selected' => '',
-         'disabled' => ''],
-        ['id' => '18',
+         'disabled' => ''),
+        array('id' => '18',
          'name' => '37',
          'selected' => '',
-         'disabled' => ''],
-        ['id' => '19',
+         'disabled' => ''),
+        array('id' => '19',
          'name' => '38',
          'selected' => '',
-         'disabled' => ''],
-      ],
-  ];
+         'disabled' => ''),
+      ),
+  );
 
 	echo('<form action="" class="fik_add_cart" method="post" enctype="multipart/form-data"><input type="hidden" name="store_product_id" value="38">'
 		. get_fik_product_select_variations($variation) . get_fik_product_select_quantity() . get_add_to_cart_button() .
