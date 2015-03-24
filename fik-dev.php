@@ -213,8 +213,47 @@ function fik_product_sku(){
   return $sku; 
 }
 
-function the_fik_add_to_cart_button(){
-  $variation = array(
+// Theming: prints the add to cart button with quantity input and variations
+function the_fik_add_to_cart_button($product_id = null, $button_classes = null) {
+    echo get_the_fik_add_to_cart_button($product_id, $button_classes);
+}
+
+
+function get_the_fik_add_to_cart_button($product_id = null) {
+    if ($product_id == null)
+        $product_id = get_the_ID();
+
+    $return = '';
+    $return .= '<form action="" class="fik_add_cart" method="post" enctype="multipart/form-data" role="form">';
+    $return .= '<input type="hidden" name="store_product_id" value="' . esc_attr($product_id) . '" />';
+    $return .= get_fik_product_select_variations($product_id);
+    $return .= get_fik_product_select_quantity();
+    $return .= get_add_to_cart_button($product_id, $button_classes);
+    $return .= '</form>';
+
+    return $return;
+}
+
+function get_add_to_cart_button($product_id = null, $button_classes = 'button alt btn btn-primary') {
+    // Check if we have stock for this product
+    $product_stock = fik_product_stock_quantity($product_id);
+
+    // Out of stock
+    if ($product_stock == 0)
+      return '<button type="submit" class="' . $buttonClasses . '" disabled="disabled">Out of stock</button>';
+
+    // There is stock
+    return '<button type="submit" class="' . $buttonClasses . '">Add to cart</button>';
+}
+
+function the_fik_product_select_variations($product_id){
+    echo get_fik_product_select_variations($product_id);
+}
+
+
+function get_fik_product_select_variations($product_id = null, $errorMessage = ''){
+
+   $variation = array(
     'class' => '',
     'id' => '16',
     'slug' => 'talla-mujer',
@@ -234,14 +273,6 @@ function the_fik_add_to_cart_button(){
          'disabled' => ''),
       ),
   );
-
-	echo('<form action="" class="fik_add_cart" method="post" enctype="multipart/form-data"><input type="hidden" name="store_product_id" value="38">'
-		. get_fik_product_select_variations($variation) . get_fik_product_select_quantity() . get_add_to_cart_button() .
-		'</form>');
-	return;
-}
-
-function get_fik_product_select_variations($variation, $errorMessage = ''){
 
   if(current_theme_supports('bootstrap-3-forms')) {
     $template = '<div class="form-group' . $variation['class'] . '">';
@@ -304,10 +335,6 @@ function get_fik_product_select_quantity(){
     $quantitytemplate = '<div class="control-group ' . $class . '"><label class="control-label" for="quantity">Quantity</label><div class="controls"><input type="number" name="quantity" class="input-mini form-control" min="1" max="10" step="1" value="1" required=""></div></div>';
   }
   return $quantitytemplate;
-}
-
-function get_add_to_cart_button($prodID = null, $buttonClasses = "button alt btn btn-primary"){
-	return '<button type="submit" class="' . $buttonClasses . '">Add to cart</button>';
 }
 
 

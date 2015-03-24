@@ -9,6 +9,8 @@ This WordPress plugin enables theme developers to develop a [Fik Stores](http://
 ## Frequently Asked Questions
 In order to create a thumbnail gallery for products, you must add a Custom Field to the product, where the key will be "product_image" and the value will be the ID of the image uploaded to the WordPress media library. Add as meny "product_image" custom fields as images needed.
 
+Quantity in a product may be modified adding a custom field named "quantity", setting quantity to 0 will triger the Out of stock state for a product.
+
 ## Contributing
 
 Everyone is welcome to help contribute and improve this project. There are several ways you can contribute:
