@@ -223,12 +223,11 @@ function get_the_fik_add_to_cart_button($product_id = null) {
     if ($product_id == null)
         $product_id = get_the_ID();
 
-    $return = '';
-    $return .= '<form action="" class="fik_add_cart" method="post" enctype="multipart/form-data" role="form">';
+    $return  = '<form action="" class="fik_add_cart" method="post" enctype="multipart/form-data" role="form">';
     $return .= '<input type="hidden" name="store_product_id" value="' . esc_attr($product_id) . '" />';
     $return .= get_fik_product_select_variations($product_id);
     $return .= get_fik_product_select_quantity();
-    $return .= get_add_to_cart_button($product_id, $button_classes);
+    $return .= get_add_to_cart_button($product_id);
     $return .= '</form>';
 
     return $return;
@@ -240,10 +239,10 @@ function get_add_to_cart_button($product_id = null, $button_classes = 'button al
 
     // Out of stock
     if ($product_stock == 0)
-      return '<button type="submit" class="' . $buttonClasses . '" disabled="disabled">Out of stock</button>';
+      return '<button type="submit" class="' . $button_classes . '" disabled="disabled">Out of stock</button>';
 
     // There is stock
-    return '<button type="submit" class="' . $buttonClasses . '">Add to cart</button>';
+    return '<button type="submit" class="' . $button_classes . '">Add to cart</button>';
 }
 
 function the_fik_product_select_variations($product_id){
