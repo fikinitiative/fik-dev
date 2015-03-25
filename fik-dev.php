@@ -631,6 +631,10 @@ add_action('widgets_init','store_sections_create_widget');
 
 function get_fik_checkout(){
     $fik_cart = new FikCart();
+    wp_enqueue_script('fik-cart-updates', plugins_url( 'js/cart.js', __FILE__ ), array('jquery'), '1.01', true);
+    $translation_array = array('deleteText' => 'Delete', 'updateText' => 'Update');
+    wp_localize_script('fik-cart-updates', 'fik_cart_texts', $translation_array);
+
     return $fik_cart->build_cart();
 }
 
@@ -694,12 +698,10 @@ function fik_slider($atts) {
             $slides = array_values($slides);
             if ($slides != array()) {
                 //We show the slider
-                // Add javascript and css to output!
-                if(!current_theme_supports('bootstrap-3')) {
-                    wp_enqueue_script('bootstrap-carousel', '/wp-content/mu-plugins/assets/js/bootstrap-carousel.js', array('jquery'), '1.01', true);
-                    
-                    wp_enqueue_style('bootstrap-carousel', '/wp-content/mu-plugins/assets/css/fik-bootstrap-carousel.css');
-                }
+                //if(!current_theme_supports('bootstrap-3')) {
+                //    wp_enqueue_script('bootstrap-carousel', plugins_url( 'js/bootstrap-carousel.js', __FILE__ ), array('jquery'), '1.01', true);
+                //    wp_enqueue_style('bootstrap-carousel', plugins_url( 'css/fik-bootstrap-carousel.css', __FILE__ ));
+                //}
                 $maxwidth = ' style="max-width:' . $atts['max-width'] . ';"';
                 $slider = '<div id="' . $atts['id'] . '" class="carousel slide"' . $maxwidth . '>';
                 // Carousel Indicators
@@ -810,7 +812,7 @@ require 'extras/display-posts-shortcode.php';
 /* Add JS for false cart badge */
 
 function cart_number_badge() {
-	wp_enqueue_script('cart-badge', plugins_url( 'cart-badge.js', __FILE__ ), array(), '1.0', true);
+	wp_enqueue_script('cart-badge', plugins_url( 'js/cart-badge.js', __FILE__ ), array(), '1.0', true);
 }
 
 add_action( 'wp_enqueue_scripts', 'cart_number_badge' );
