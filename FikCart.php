@@ -27,36 +27,42 @@ class FikCart
     private function cart_format()
     {
         $format = array(
-            'before_cart'           => '<table class="table table-striped">',
-            'after_cart'            => '</table>',
-            'before_header_row'     => '<tr>',
-            'after_header_row'      => '</tr>',
-            'before_row'            => '<tr id="cart_item_%s" class="cart_item_row">',
-            'after_row'             => '</tr>',
-            'before_element'        => '<td>',
-            'after_element'         => '</td>',
-            'before_header'         => '<thead>',
-            'after_header'          => '</thead>',
-            'before_header_element' => '<th>',
-            'after_header_element'  => '</th>',
-            'before_body'           => '<tbody>',
-            'after_body'            => '</tbody>',
-            'before_total'          => '<tfoot><tr class="fik-cart-subtotal-row">',
-            'after_total'           => '</tr></tfoot>',
-            'before_total_title'    => '<td colspan="4"><strong>',
-            'after_total_title'     => '</strong></td>',
-            'before_total_element'  => '<td><strong>',
-            'after_total_element'   => '</strong></td>',
-            'cart_image_element'    => '<td class="cart_image"><a href="%s"><img src="%s" alt="%s"></a></td>',
-            'product_name_element'  => '<td><a href="%s">%s</a><br/>%s</td>',
-            'quantity_form'         => '<td><form action="" method="post"><input type="hidden" name="cart_item_%s" value="%s">
-                                        <input type="number" name="cart_item_%s_quantity" min="0" max="10" step="1" value="%s"
-                                        placeholder="%s" class="input-mini" required="">
-                                        <button type="submit" class="cart_item_update btn btn-small" name="update_quantity">%s</button></form></td>',
-            'product_price'         => '<td>%s</td>',
-            'product_subtotal'      => '<td>%s</td>',
-            'checkout_form'         => '<form action="" class="fik_to_checkout text-center" method="post" enctype="multipart/form-data">
-                                        <button name="checkout" type="submit" class="button alt btn btn-large btn-primary">%s</button></form>',
+            'before_cart'               => '<table class="table table-striped">',
+            'after_cart'                => '</table>',
+            'before_header_row'         => '<tr>',
+            'after_header_row'          => '</tr>',
+            'before_row'                => '<tr id="cart_item_%s" class="cart_item_row">',
+            'after_row'                 => '</tr>',
+            'before_element'            => '<td>',
+            'after_element'             => '</td>',
+            'before_header'             => '<thead>',
+            'after_header'              => '</thead>',
+            'before_header_element'     => '<th>',
+            'after_header_element'      => '</th>',
+            'before_header_remove_item' => '',
+            'after_header_remove_item'  => '',
+            'before_body'               => '<tbody>',
+            'after_body'                => '</tbody>',
+            'before_total'              => '<tfoot><tr class="fik-cart-subtotal-row">',
+            'after_total'               => '</tr></tfoot>',
+            'before_total_title'        => '<td colspan="4"><strong>',
+            'after_total_title'         => '</strong></td>',
+            'before_total_element'      => '<td>',
+            'after_total_element'       => '</td>',
+            'before_total_remove_item'  => '',
+            'after_total_remove_item'   => '',
+            'cart_image_element'        => '<td class="cart_image"><a href="%s"><img src="%s" alt="%s"></a></td>',
+            'product_name_element'      => '<td><a href="%s">%s</a><br/>%s</td>',
+            'quantity_form'             => '<td><form action="" method="post"><input type="hidden" name="cart_item_%s" value="%s">
+                                            <input type="number" name="cart_item_%s_quantity" min="0" max="10" step="1" value="%s"
+                                            placeholder="%s" class="input-mini" required="">
+                                            <button type="submit" class="cart_item_update btn btn-small" name="update_quantity">%s</button></form></td>',
+            'product_price'             => '<td>%s</td>',
+            'product_subtotal'          => '<td>%s</td>',
+            'remove_item_form'          => '',
+            'checkout_form'             => '<form action="" class="fik_to_checkout text-center" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" value="true" name="checkout">
+                                            <button name="checkoutbutton" type="submit" class="button alt btn btn-large btn-primary">%s</button></form>',
         );
         $format = apply_filters('cart_format', $format);
 
@@ -105,6 +111,9 @@ class FikCart
                $this->format['before_header_element'] .
                    __('Subtotal', 'fik-stores') .
                $this->format['after_header_element'] .
+               $this->format['before_header_remove_item'] .
+                   __('', 'fik-stores') .
+                $this->format['after_header_remove_item'] .
                $this->format['after_header_row'] .
                $this->format['after_header'];
     }
@@ -161,6 +170,8 @@ class FikCart
 
     private function cart_items($items)
     {
+        $checkoutTable = '';
+        $cartTotal = 0;
         $checkoutTable .= $this->cart_row(
             array(
                 "number"=>0,
@@ -249,6 +260,7 @@ class FikCart
                sprintf($this->format['quantity_form'], $args['number'], $args['checkoutItem'], $args['number'], $args['productQuantity'], $args['productQuantity'], __('Update', 'fik-stores')) .
                sprintf($this->format['product_price'], $args['productPrice']) .
                sprintf($this->format['product_subtotal'], $args['productSubotal']) .
+               sprintf($this->format['remove_item_form'], $args['number'], $args['checkoutItem'], $args['number']) .
                $this->format['after_row'];
     }
 
@@ -261,6 +273,8 @@ class FikCart
                $this->format['before_total_element'] .
                    $cartTotal .
                $this->format['after_total_element'] .
+               $this->format['before_total_remove_item'] .
+               $this->format['after_total_remove_item'] .
                $this->format['after_total'];
     }
 }
